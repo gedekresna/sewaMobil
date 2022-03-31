@@ -50,8 +50,8 @@ class MobilController(http.Controller):
                 args = {'success':True, 'ID':mobil_baru.id}
                 return args
 
-    @http.route(['/deletemobil','deletemobil/<int:idnya>'],auth='user',methods=['DELETE'],type='json')
-    def deleteMobil(self, idnya = None, **kw):
+    @http.route(['/deletemobil','/deletemobil/<int:idnya>'],auth='user',methods=['DELETE'],type='json')
+    def deleteMobil(self, idnya=None, **kw):
         if idnya:
-            mobil_id = request.env['mobil.list'].search(['id','=',idnya]).unlink()
+            mobil_id = request.env['mobil.list'].search([('id','=',idnya)]).unlink()
             return mobil_id
