@@ -31,8 +31,7 @@
                         <field name="tipe"/>
                         <field name="transmisi"/>
                         <field name="harga"/>   
-                        <field name="brand"/>  
-                       
+                        <field name="brand"/>    
                     </group>
                 </sheet>
             </form>
