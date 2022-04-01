@@ -1,4 +1,6 @@
+
 from odoo import api, fields, models
+from .mobil import Mobil
 
 
 class Sewa(models.Model):
@@ -15,23 +17,27 @@ class Sewa(models.Model):
 
     lama_sewa = fields.Integer(string='Lama Sewa')
 
-    sudah_kembali = fields.Boolean(string='Sudah Dikembalikan', default=False)
-
     total = fields.Float(compute='_compute_total', string='Total')
 
     @api.depends('mobil_ids')
     def _compute_total(self):
         for record in self:
             record.total = record.mobil_ids.harga * record.lama_sewa
-       
+
+    @api.model
+    def create(self, values):
+        record =  super(Sewa, self).create(values)
+        if record.mobil_ids:
+            self.env['mobil.list'].search([('id','=',record.mobil_ids.mobil_tipe_id.id)]).write({'sedang_disewa':True})
+            return record  
   
 class SewaDetail(models.Model):
     _name = 'mobil.sewadetail'
     _description = 'New Description'
 
     sewa_id = fields.Many2one(comodel_name='mobil.sewa', string='Sewa')
-    # mobil_id = fields.Many2one(comodel_name='mobil.list', string='Sewa Mobil')
-    mobil_tipe_id = fields.Many2one(comodel_name='mobil.list', string='Tipe Mobil')
+  
+    mobil_tipe_id = fields.Many2one(comodel_name='mobil.list', string='Tipe Mobil',domain=[('sedang_disewa','!=',True)])
 
     name = fields.Char(string='Name')
 
@@ -41,6 +47,9 @@ class SewaDetail(models.Model):
     def _compute_harga(self):
         for record in self:
             record.harga = record.mobil_tipe_id.harga
+
+   
+    
 
     
 

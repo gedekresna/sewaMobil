@@ -12,8 +12,8 @@
                 <field name="tipe"/>
                 <field name="transmisi"/>
                 <field name="harga"/>   
-                <field name="brand"/>    
-                       
+                <field name="brand"/> 
+                <field name="sedang_disewa"/>          
             </tree>
         </field>
     </record>

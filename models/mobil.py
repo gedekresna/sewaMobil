@@ -20,7 +20,7 @@ class Mobil(models.Model):
         ('honda', 'Honda'),('toyota','Toyota'),('mitsubishi','Mitsubishi'),('suzuki','Suzuki'),('daihatsu','Daihatsu')
     ], string='brand')
 
-    disewa = fields.Boolean(string='Sudah Disewa',default=False)
+    sedang_disewa = fields.Boolean(string='Sedang Disewa',default=False)
     
     
     
